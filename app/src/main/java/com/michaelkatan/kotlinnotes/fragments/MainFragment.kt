@@ -6,15 +6,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
-import com.michaelkatan.kotlinnotes.NotesAdapter
+import com.michaelkatan.kotlinnotes.adapters.NotesAdapter
 import com.michaelkatan.kotlinnotes.R
 import com.michaelkatan.kotlinnotes.classes.Note
 import kotlinx.android.synthetic.main.main_fragment.*
 
-class MainFragment(): Fragment()
+class MainFragment(): Fragment(),View.OnClickListener
 {
+
     val noteList : ArrayList<Note> = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
@@ -28,7 +29,7 @@ class MainFragment(): Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
 
-        val noteAdapter = NotesAdapter(noteList)
+        val noteAdapter = NotesAdapter(noteList, this)
 
         frag_recyclerView.adapter = noteAdapter
         frag_recyclerView.layoutManager = LinearLayoutManager(context)
@@ -47,6 +48,16 @@ class MainFragment(): Fragment()
         }
 
 
+    }
+
+    override fun onClick(view: View?)
+    {
+        val tv = view as TextView
+
+        when(view?.id)
+        {
+            R.id.note_tv -> {Toast.makeText(context,tv.text, Toast.LENGTH_SHORT).show()}
+        }
     }
 
 }
